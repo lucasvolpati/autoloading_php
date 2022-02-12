@@ -1,33 +1,21 @@
 <?php
 
-//Arquivo de configuração do projeto contendo o autoloadind de classes.
+/**
+ * Function for autoloading classes
+ * Created by Lucas Alcantara Rodriguer Volpati | lucas.volpati@outlook.com
+ * License: MIT
+ * Make good use ;)
+ */
 
+spl_autoload_register(function($className) {
 
-function autoload($classe) { //A váriavel $classe recebe o nome da classe que está sendo chamada.
+	$separator = DIRECTORY_SEPARATOR; 
 
-	$separator = DIRECTORY_SEPARATOR; //Barra ou Contra Barra (linux ou windows)
+	$dirBase = __DIR__ . $separator; 
 
-	$dirBase = __DIR__ . $separator; //Diretório base do projeto (pasta raíz) deve ser algo do tipo /var/www/html/projeto (linux) ou C:\\xampp\htdocs\projeto.
+	$class = $dirBase . 'class' . $separator . str_replace('\\', $separator, $className . ".php");
 	
-	//var_dump($dirBase);exit; //Comando para teste, mostra o caminho do diretório base.
-
-
-	$classe = $dirBase . 'class' . $separator . str_replace('\\', $separator, $classe . ".php");
-
-	//var_dump($classe);exit; //Comando para teste, mostra o caminho completo da localização da classe.
-	
-	if (file_exists($classe)) { //Verificação da existencia do arquivo.
-
-		include($classe);
+	if (file_exists($class)) {
+		include($class);
 	}
-
-
-
-
-}
-
-
-spl_autoload_register('autoload'); //Método autoload que chama a função criada acima.
-
-
-?>
+});
